@@ -6,3 +6,8 @@ OR
 source .venv/bin/activate
 
 pip install -r requirements.txt
+
+
+pytest  -v -s
+
+coverage run -m pytest  -v -s
