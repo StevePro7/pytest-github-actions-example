@@ -1,0 +1,29 @@
+&nbsp;&nbsp;name: Run Unit Test via Pytest
+&nbsp;&nbsp;on: [push]
+&nbsp;&nbsp;jobs:
+&nbsp;&nbsp;  build:
+&nbsp;&nbsp;    runs-on: ubuntu-latest
+&nbsp;&nbsp;    strategy:
+&nbsp;&nbsp;      matrix:
+&nbsp;&nbsp;        python-version: ["3.10"]
+&nbsp;&nbsp;    steps:
+&nbsp;&nbsp;      - uses: actions/checkout@v3
+&nbsp;&nbsp;      - name: Set up Python ${{ matrix.python-version }}
+&nbsp;&nbsp;        uses: actions/setup-python@v4
+&nbsp;&nbsp;        with:
+&nbsp;&nbsp;          python-version: ${{ matrix.python-version }}
+&nbsp;&nbsp;      - name: Install dependencies
+&nbsp;&nbsp;        run: |
+&nbsp;&nbsp;          python -m pip install --upgrade pip
+&nbsp;&nbsp;          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+&nbsp;&nbsp;      - name: Lint with Ruff
+&nbsp;&nbsp;        run: |
+&nbsp;&nbsp;          pip install ruff
+&nbsp;&nbsp;          ruff --format=github --target-version=py310 .
+&nbsp;&nbsp;        continue-on-error: true
+&nbsp;&nbsp;      - name: Test with pytest
+&nbsp;&nbsp;        run: |
+&nbsp;&nbsp;          coverage run -m pytest  -v -s
+&nbsp;&nbsp;      - name: Generate Coverage Report
+&nbsp;&nbsp;        run: |
+&nbsp;&nbsp;          coverage report -m
