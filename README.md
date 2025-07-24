@@ -1,4 +1,7 @@
 # pytest-github-actions-example
+Reference:
+https://pytest-with-eric.com/integrations/pytest-github-actions
+https://github.com/ericsalesdeandrade/pytest-github-actions-example
 
 python -m venv .venv
 .\.venv\Scripts\activate
